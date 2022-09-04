@@ -183,12 +183,14 @@ Student.getBySearch = async (conditions, result) => {
         if (item.studentLevel.length > 0) {
           item.studentLevel.forEach((level) => {
             if (level.level == studentLevel.level) {
-              console.log("level.yearStudy : ", level.yearStudy);
               if (!conditions.registerYearId) {
                 if (level.yearStudy.currentYear == true) {
+                  console.log("level.yearStudy : ", level);
                   filteredStudent.push(item);
                 } /* end of if */
-              } else {
+              }
+              if (conditions.registerYearId) {
+                if (!level.yearStudy.currentYear == true)
                 filteredStudent.push(item);
               } /* end of if */
             } /* end of if */
@@ -200,7 +202,7 @@ Student.getBySearch = async (conditions, result) => {
     //  let filteredStudent = students.filter((student) => {
     //    return student.studentLevel.length > 0;
     //  });
-
+    console.log("student : ", filteredStudent);
     result(null, filteredStudent);
   } catch (err) {
     console.log(prismaErrorHandling(err));
